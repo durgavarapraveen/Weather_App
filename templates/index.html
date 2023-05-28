@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href=" {% static 'mainpage.css' %}" >
+    <script src=" {% static 'mainpage.js' %}" type="text/javascript" defer></script>
+    <script src="https://kit.fontawesome.com/17305c1313.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header">
+                <img class="img" src="{% static 'weather.png' %}" alt="Logo">
+                <button onclick="change()"><i class="fa-solid fa-bars menu"></i></button>
+                <div class="first">
+                    <p>Weather App</p>
+                </div>
+                <div class="second" id="second">
+                    <a href="#" >Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Usage Guide</a>
+                    <form action='' method='POST'>
+                        {% csrf_token %}
+                        <input type="text" placeholder="search" name='city'>
+                        <button>Search</button>
+                    </form>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-container" id="move">
+            <div class="box">
+                <p class="place">Weather of {{data.city}}</p>
+                <div class="grid">
+                    <div class="card">
+                        <div class="temp">
+                            <p>Temperature</p>
+                        </div>
+                        <div class="bin">
+                            <img src="{% static 'hot (1).png' %}">
+                            <p>Temp {{data.temp}}</p>
+                            <p>Max Temp {{data.temp_max}} </p>
+                            <p>Min Temp {{data.temp_min}} </p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="temp">
+                            <p>Humidity Info</p>
+                        </div>
+                        <div class="bin">
+                            <img src="{% static 'rain.png' %}">
+                            <p>Feels_like {{data.feels_like}} </p>
+                            <p>Humidity {{data.humidity}} </p>
+                            <p>Surrise {{data.sun_rise}} </p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="temp">
+                            <p>Pressure Info</p>
+                        </div>
+                        <div class="bin">
+                            <img src="{% static 'wind.png' %}">
+                            <p>Pressure {{data.pressure}} </p>
+                            <p>Wind_speed {{data.wind_speed}} </p>
+                            <p>Sun_set {{data.sun_set}} </p>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            <div class="p">
+                <p class="p" >Weather of some other Major Places</p>
+            </div>
+
+            <marquee class="place-2">
+                <div class="row">
+                    {% for weather in weather_app %}
+                    <div class="place-box">
+                        <div class="head">
+                            <p>{{weather.city}}</p>
+                        </div>
+                        <div class="bin-1">
+                            <p>Temp : {{weather.temp}}</p>
+                            <p>Humidity : {{weather.humidity}} </p>
+                            <p>Pressure : {{weather.pressure}}</p>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </marquee>
+        </div>
+    </div>
+    
+</body>
+</html>
